@@ -27,3 +27,9 @@ Number		ep_humidity_outdoor  	"Cumulated Humidity Outdoor"	(e_paper)		{mqtt=">[o
 Number		ep_download  	   	"Current Download"		(e_paper)		{mqtt=">[openhab:epaper/download:state:*:default]"}
 Number		ep_upload  	    	"Current Upload"		(e_paper)		{mqtt=">[openhab:epaper/upload:state:*:default]"}
 ```
+
+#### Autostart:  
+Add this line to your /etc/rc.local right before the exit 0  
+```python
+python /home/pi/emon.py &
+```

@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# install packages
+apt-get install git bc i2c-tools python-imaging -y
+# install pip
+cd /tmp && wget https://bootstrap.pypa.io/get-pip.py && sudo chmod +x ./get-pip.py
+./get-pip.py
+# install paho mqtt
+pip install paho-mqtt
+
+cd /home/pi && wget https://raw.githubusercontent.com/Dom1n1c/PaPiRus-MQTT/master/PaPiRus-MQTT.py && sudo chmod +x PaPiRus-MQTT.py
+git clone https://github.com/PiSupply/PaPiRus.git
+cd PaPiRus
+python setup.py install    # Install PaPirRus python library
+papirus-setup    # Install drivers and setup epaper

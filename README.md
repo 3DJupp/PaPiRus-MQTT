@@ -15,7 +15,6 @@ or
 System will now reboot
 
 ### Install PIP and paho-mqtt
-g
 
 ```bash
 cd /tmp && wget https://bootstrap.pypa.io/get-pip.py && chmod +x ./get-pip.py

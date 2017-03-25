@@ -6,9 +6,9 @@ First, install the driver / example programs for the Pi-HAT
 ```curl -sSL https://goo.gl/ZOuov8 | sudo bash```
 #### Getting Started
 ###### Select your screen size
-```sudo papirus-set [1.44 | 1.9 | 2.0 | 2.6 | 2.7 ]```
-or
-```sudo papirus-config```
+```sudo papirus-set [1.44 | 1.9 | 2.0 | 2.6 | 2.7 ]```  
+or  
+```sudo papirus-config```  
 System will now reboot
 
 Further information can be found on: https://github.com/PiSupply/PaPiRus

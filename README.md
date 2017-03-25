@@ -13,7 +13,7 @@ System will now reboot
 Further information can be found on: https://github.com/PiSupply/PaPiRus
 
 #### OpenHAB Items  
-I use OpenHAB to push Data to my MQTT Broker
+I use OpenHAB to push Data to my MQTT Broker  
 Those items have i created for it (once they receive an update, it will be sent to the MQTT Broker)
 ```java
 Group 		e_paper  	  	"E Paper Display Items"				

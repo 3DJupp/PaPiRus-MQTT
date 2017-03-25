@@ -21,22 +21,22 @@ if user != 0:
 papirus = Papirus()
 papirus.clear()
 
-power				= "0"
-consumption			= "0"
-temperature			= "0"
-humidity			= "0"
+power			= "0"
+consumption		= "0"
+temperature		= "0"
+humidity		= "0"
 temperature2		= "0"
-humidity2			= "0"
-download			= "0"
-upload				= "0"
-power_prev			= "0"
+humidity2		= "0"
+download		= "0"
+upload			= "0"
+power_prev		= "0"
 consumption_prev	= "0"
 temperature_prev	= "0"
 humidity_prev		= "0"
 temperature2_prev	= "0"
 humidity2_prev		= "0"
 download_prev		= "0"
-upload_prev			= "0"
+upload_prev		= "0"
 last_refresh		= datetime.now()
 
 def on_connect(client, userdata, flags, rc):

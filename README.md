@@ -31,5 +31,5 @@ Number		ep_upload  	    	"Current Upload"		(e_paper)		{mqtt=">[openhab:epaper/up
 #### Autostart:  
 Add this line to your /etc/rc.local right before the exit 0  
 ```python
-python /home/pi/emon.py &
+python /home/pi/PaPiRus-MQTT.py &
 ```

@@ -4,7 +4,6 @@ First, install the driver / example programs for the Pi-HAT
 
 ### Setup PaPiRus and PaPiRus-MQTT
 ```curl -sSL https://goo.gl/ZOuov8 | sudo bash```
-#### Getting Started
 ###### Select your screen size
 ```sudo papirus-set [1.44 | 1.9 | 2.0 | 2.6 | 2.7 ]```  
 or  

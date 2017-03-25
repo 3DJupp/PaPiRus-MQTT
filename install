@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
-
+# install files in the home of user "Pi"
+cd /home/pi
 # install packages
-apt-get install git bc i2c-tools python-imaging -y
+apt-get install git bc i2c-tools python python-imaging -y
 # install pip
-cd /tmp && wget https://bootstrap.pypa.io/get-pip.py && chmod +x ./get-pip.py
-./get-pip.py
+echo -e "Installing pip\n";
+curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | sudo python2.7
 # install paho mqtt
+echo -e "Installing paho-mqtt\n";
 pip install paho-mqtt
-
-cd /home/pi && wget https://raw.githubusercontent.com/Dom1n1c/PaPiRus-MQTT/master/PaPiRus-MQTT.py && chmod +x PaPiRus-MQTT.py
+wget https://raw.githubusercontent.com/Dom1n1c/PaPiRus-MQTT/master/PaPiRus-MQTT.py -P /home/pi && chmod +x /home/pi/PaPiRus-MQTT.py
 git clone https://github.com/PiSupply/PaPiRus.git
 cd PaPiRus
 python setup.py install    # Install PaPirRus python library

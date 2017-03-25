@@ -5,7 +5,7 @@ cd /home/pi
 apt-get install git bc i2c-tools python python-imaging -y
 # install pip
 echo -e "Installing pip";
-curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | sudo python2.7
+curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | python2.7
 # install paho mqtt
 echo -e "Installing paho-mqtt";
 pip install paho-mqtt

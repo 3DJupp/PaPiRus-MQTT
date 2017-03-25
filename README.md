@@ -15,3 +15,9 @@ sudo papirus-set [1.44 | 1.9 | 2.0 | 2.6 | 2.7 ]
 or
 sudo papirus-config
 System will now reboot
+
+# Install PIP and paho-mqtt
+cd /tmp
+wget https://bootstrap.pypa.io/get-pip.py && chmod +x ./get-pip.py
+./get-pip.py
+pip install paho-mqtt

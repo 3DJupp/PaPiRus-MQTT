@@ -2,7 +2,6 @@
 MQTT Dashboard utilizing an ePaper / eInk Display
 Energy/Smarthome Dashboard using the PaPiRus Zero on a Raspberry Pi Zero / Zero W
 First, install the driver / example programs for the Pi-HAT
-https://github.com/PiSupply/PaPiRus
 
 ### Setup PaPiRus
 ###### Run this line and PaPiRus will be setup and installed
@@ -14,10 +13,16 @@ or
 ```sudo papirus-config```
 System will now reboot
 
-### Install PIP and paho-mqtt
+Further information can be found on: https://github.com/PiSupply/PaPiRus
+
+### Install PaPiRus MQTT
 
 ```bash
-cd /tmp && wget https://bootstrap.pypa.io/get-pip.py && chmod +x ./get-pip.py
+cd /tmp && wget https://bootstrap.pypa.io/get-pip.py && sudo chmod +x ./get-pip.py
 ./get-pip.py
 pip install paho-mqtt
+
+cd /home/pi && wget https://raw.githubusercontent.com/Dom1n1c/PaPiRus-MQTT/master/PaPiRus-MQTT.py && sudo chmod +x PaPiRus-MQTT.py
+
 ```
+

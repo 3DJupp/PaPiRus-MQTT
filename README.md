@@ -1,7 +1,8 @@
 # PaPiRus-MQTT
-MQTT Dashboard utilizing an ePaper / eInk Display on a Raspberry Pi Zero / Zero W  
-First, install the driver / example programs for the Pi-HAT
+MQTT Dashboard utilizing an ePaper / eInk Display on a Raspberry Pi (i prefer the Raspberry Pi Zero W, because i only need one cable)
+![20170326_133457](https://cloud.githubusercontent.com/assets/8407566/24331707/3a2c4aba-123a-11e7-9441-34d822843e8c.jpg)
 
+First, install the driver / example programs for the Pi-HAT
 ### Setup PaPiRus and PaPiRus-MQTT
 ```curl -sSL https://goo.gl/ZOuov8 | sudo bash```
 ###### Select your screen size

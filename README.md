@@ -7,12 +7,10 @@ First, install the driver, install all necessary stuff and PaPiRus-MQTT.py to /h
 ```bash
 curl -sSL https://goo.gl/ZOuov8 | sudo bash
 ```
-###### Select your screen size
+##### Select your screen size
 For the Papirus Zero, there are two sizes at the moment  
-![papirus-zero-sizes](https://cloud.githubusercontent.com/assets/8407566/24331903/acb3b49e-123d-11e7-8318-f80efbe7040f.png)
+![papirus-zero-sizes](https://cloud.githubusercontent.com/assets/8407566/24331903/acb3b49e-123d-11e7-8318-f80efbe7040f.png)  
 Execute the following to set the screen resolution.  
-papirus-set and papirus-config are useful, when you want to fix issues with the driver on a previously working raspian installation.  
-run papirus-config disable the driver, papirus-set with the correct resolution and then reactivate the driver in papirus-config.  
 ```bash
 sudo papirus-set [1.44 | 1.9 | 2.0 | 2.6 | 2.7 ]
 ```  
@@ -20,6 +18,11 @@ or
 ```bash
 sudo papirus-config
 ```
+
+##### Troubleshooting
+papirus-set and papirus-config are useful, when you want to fix issues with the driver on a previously working raspian installation.  
+run papirus-config disable the driver, papirus-set with the correct resolution and then reactivate the driver in papirus-config.  
+
 Further information can be found on: https://github.com/PiSupply/PaPiRus
 
 #### OpenHAB Items  

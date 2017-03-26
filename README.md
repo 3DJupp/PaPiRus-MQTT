@@ -2,20 +2,25 @@
 MQTT Dashboard utilizing an ePaper / eInk Display on a Raspberry Pi (i prefer the Raspberry Pi Zero W, because i only need one cable)
 ![20170326_133457](https://cloud.githubusercontent.com/assets/8407566/24331707/3a2c4aba-123a-11e7-9441-34d822843e8c.jpg)
 
-First, install the driver / example programs for the Pi-HAT
+First, install the driver, install all necessary stuff and PaPiRus-MQTT.py to /home/pi
 ### Setup PaPiRus and PaPiRus-MQTT
-```curl -sSL https://goo.gl/ZOuov8 | sudo bash```
+```bash
+curl -sSL https://goo.gl/ZOuov8 | sudo bash
+```
 ###### Select your screen size
-```sudo papirus-set [1.44 | 1.9 | 2.0 | 2.6 | 2.7 ]```  
+```bash
+sudo papirus-set [1.44 | 1.9 | 2.0 | 2.6 | 2.7 ]
+```  
 or  
-```sudo papirus-config```  
-System will now reboot
-
+```bash
+sudo papirus-config
+```
 Further information can be found on: https://github.com/PiSupply/PaPiRus
 
 #### OpenHAB Items  
 I use OpenHAB to push Data to my MQTT Broker  
-Those items have i created for it (once they receive an update, it will be sent to the MQTT Broker)
+Those items have i created for it (once they receive an update, it will be sent to the MQTT Broker)  
+I recommend to Push the Data not to often, but at least once a minute (correct time on screen)
 ```java
 Group 		e_paper  	  	"E Paper Display Items"				
 Number		ep_power  	  	"Cumulated Wattage"		(e_paper)		{mqtt=">[openhab:epaper/power:state:*:default]"}
@@ -31,6 +36,6 @@ Number		ep_upload  	    	"Current Upload"		(e_paper)		{mqtt=">[openhab:epaper/up
 
 #### Autostart:  
 Add this line to your /etc/rc.local right before the exit 0  
-```python
+```bash
 python /home/pi/PaPiRus-MQTT.py &
 ```

@@ -9,7 +9,7 @@ curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | pyth
 # install paho mqtt
 echo -e "Installing paho-mqtt";
 pip install paho-mqtt
-wget -q https://goo.gl/USc3Ml -O /home/pi/papirus-mqtt.py && chmod +x /home/pi/papirus-mqtt.py
+wget -q https://goo.gl/dr5I7u -O /home/pi/papirus-mqtt.py && chmod +x /home/pi/papirus-mqtt.py
 git clone https://github.com/PiSupply/PaPiRus.git
 cd PaPiRus
 python setup.py install    # Install PaPirRus python library

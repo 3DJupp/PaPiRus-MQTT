@@ -2,7 +2,7 @@
 MQTT Dashboard utilizing an ePaper / eInk Display on a Raspberry Pi (i prefer the Raspberry Pi Zero W, because i only need one cable)
 ![20170326_133457](https://cloud.githubusercontent.com/assets/8407566/24331707/3a2c4aba-123a-11e7-9441-34d822843e8c.jpg)
 
-First, install the driver, install all necessary stuff and PaPiRus-MQTT.py to /home/pi
+First, install the driver, install all necessary stuff and papirus-mqtt.py to /home/pi
 ### Setup PaPiRus and PaPiRus-MQTT
 ```bash
 curl -sSL https://goo.gl/ZOuov8 | sudo bash
@@ -45,5 +45,5 @@ Number		ep_upload  	    	"Current Upload"		(e_paper)		{mqtt=">[openhab:epaper/up
 #### Autostart:  
 Add this line to your /etc/rc.local right before the exit 0  
 ```bash
-python /home/pi/PaPiRus-MQTT.py &
+python /home/pi/papirus-mqtt.py &
 ```

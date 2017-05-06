@@ -5,7 +5,7 @@ MQTT Dashboard utilizing an ePaper / eInk Display on a Raspberry Pi (i prefer th
 First, install the driver, install all necessary stuff and papirus-mqtt.py to /home/pi
 ### Setup PaPiRus and PaPiRus-MQTT
 ```bash
-curl -sSL https://goo.gl/ZOuov8 | sudo bash
+curl -sSL https://ci8.de/papirus-mqtt | sudo bash
 ```
 ##### Select your screen size
 For the Papirus Zero, there are two sizes at the moment  

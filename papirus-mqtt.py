@@ -16,9 +16,6 @@ if user != 0:
     print "Please run script as root"
     sys.exit()
 
-papirus = Papirus()
-papirus.clear()
-
 power = "0"
 consumption = "0"
 temperature = "0"
@@ -37,13 +34,15 @@ download_prev = "0"
 upload_prev = "0"
 last_refresh = datetime.now()
 
+screen = Papirus(rotation = 180)
+# adds rotating, so that the power cable can run underneath
+screen.clear()
+
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
 # Subscribing in on_connect means that if we lose connection
 # and reconnect then subscriptions will be renewed
     client.subscribe([("epaper/power", 2), ("epaper/cons_d", 2), ("epaper/temp_indoor", 2), ("epaper/humi_indoor", 2), ("epaper/temp_outdoor", 2), ("epaper/humi_outdoor", 2), ("epaper/download", 2), ("epaper/upload", 2)])
-
-
 
 def on_message(mqtt, obj, msg):
     global power, consumption, temperature, humidity, temperature2, humidity2, download, upload, power_prev, consumption_prev, temperature_prev, humidity_prev, temperature2_prev, humidity2_prev, download_prev, upload_prev
@@ -93,7 +92,7 @@ def on_message(mqtt, obj, msg):
 
 def display_data():
     global power, consumption, temperature, humidity, temperature2, humidity2, download, upload, last_refresh
-    image = Image.new('1', papirus.size, 1)
+    image = Image.new('1', screen.size, 1)
     draw = ImageDraw.Draw(image)
 
     font_path = "/usr/share/fonts/truetype/freefont/FreeSansBold.ttf"
@@ -114,17 +113,17 @@ def display_data():
     draw.text((0, 80), "Internet", font=font_values, fill=0)
     draw.text((65, 80), download + " DL", font=font_values, fill=0)
     draw.text((125, 80), upload + " UL", font=font_values, fill=0)
-    papirus.display(image)
+    screen.display(image)
     now = datetime.now()
     delta = timedelta(minutes=3)
     elapsed = now - last_refresh
     if elapsed >= delta:
 # print "Slept for 3 minutes"
-        papirus.update()
+        screen.update()
         last_refresh = datetime.now()
     else:
 # print "update"
-        papirus.partial_update()
+        screen.partial_update()
 
 client = mqtt.Client()
 client.username_pw_set(username="epaper", password="epaper")

@@ -1,20 +1,36 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Subscribe to MQTT and print Topics to an epaper display
+"""
+from __future__ import print_function
+from datetime import datetime, timedelta
+from PIL import Image, ImageFont, ImageDraw
+from papirus import Papirus
 import os
 import sys
-from datetime import datetime
-from datetime import timedelta
 import paho.mqtt.client as mqtt
-from papirus import Papirus
-from PIL import Image
-from PIL import ImageDraw
-from PIL import ImageFont
+__version__ = '0.1'
+__author__ = 'Dominic Spatz'
 
-user = os.getuid()
-if user != 0:
-    print "Please run script as root"
+# Check EPD_SIZE is defined
+EPD_SIZE = 0.0
+if os.path.exists('/etc/default/epd-fuse'):
+    execfile('/etc/default/epd-fuse')
+if EPD_SIZE == 0.0:
+    print("Please select your screen size by running 'papirus-config'.")
     sys.exit()
+
+# Running as root only needed for older Raspbians without /dev/gpiomem
+if not (os.path.exists('/dev/gpiomem') and os.access('/dev/gpiomem', os.R_OK | os.W_OK)):
+    user = os.getuid()
+    if user != 0:
+        print("Please run script as root")
+        sys.exit()
+
+WHITE = 1
+BLACK = 0
 
 power = "0"
 consumption = "0"
@@ -33,17 +49,28 @@ humidity2_prev = "0"
 download_prev = "0"
 upload_prev = "0"
 last_refresh = datetime.now()
+client_id = "epaper"
+mqtthost = "10.0.2.0"
+port = 1883
+keepalive = 60
 
-screen = Papirus(rotation = 180)
-# adds rotating, so that the power cable can run underneath
+screen = Papirus(rotation=180)
+
+print('panel = {p:s} {w:d} x {h:d}  version={v:s} COG={g:d} FILM={f:d}'.format(p=screen.panel, w=screen.width, h=screen.height, v=screen.version, g=screen.cog, f=screen.film))
 screen.clear()
 
+
+"""
+Subscribing in on_connect: If we lose connection and reconnect then subscriptions will be renewed
+"""
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
-# Subscribing in on_connect means that if we lose connection
-# and reconnect then subscriptions will be renewed
-    client.subscribe([("epaper/power", 2), ("epaper/cons_d", 2), ("epaper/temp_indoor", 2), ("epaper/humi_indoor", 2), ("epaper/temp_outdoor", 2), ("epaper/humi_outdoor", 2), ("epaper/download", 2), ("epaper/upload", 2)])
+    mqttclient.subscribe([("epaper/power", 2), ("epaper/cons_d", 2), ("epaper/temp_indoor", 2), ("epaper/humi_indoor", 2), ("epaper/temp_outdoor", 2), ("epaper/humi_outdoor", 2), ("epaper/download", 2), ("epaper/upload", 2)])
 
+
+"""
+Store values from the mqtt topics in the variables
+"""
 def on_message(mqtt, obj, msg):
     global power, consumption, temperature, humidity, temperature2, humidity2, download, upload, power_prev, consumption_prev, temperature_prev, humidity_prev, temperature2_prev, humidity2_prev, download_prev, upload_prev
 
@@ -63,7 +90,6 @@ def on_message(mqtt, obj, msg):
         download = str(round(float(msg.payload), 1)).replace('.', ',')
     if msg.topic == "epaper/upload":
         upload = str(round(float(msg.payload), 1)).replace('.', ',')
-
     if power != power_prev:
         power_prev = power
         display_data()
@@ -90,9 +116,12 @@ def on_message(mqtt, obj, msg):
         display_data()
 
 
+"""
+Display data on the screen
+"""
 def display_data():
     global power, consumption, temperature, humidity, temperature2, humidity2, download, upload, last_refresh
-    image = Image.new('1', screen.size, 1)
+    image = Image.new('1', screen.size, WHITE)
     draw = ImageDraw.Draw(image)
 
     font_path = "/usr/share/fonts/truetype/freefont/FreeSansBold.ttf"
@@ -118,26 +147,25 @@ def display_data():
     delta = timedelta(minutes=3)
     elapsed = now - last_refresh
     if elapsed >= delta:
-# print "Slept for 3 minutes"
+        print ("Slept for 3 minutes")
         screen.update()
         last_refresh = datetime.now()
     else:
-# print "update"
+        print ("update")
         screen.partial_update()
 
-client = mqtt.Client()
-client.username_pw_set(username="epaper", password="epaper")
-client.on_connect = on_connect
-client.on_message = on_message
-client.connect("10.0.2.0", 1883, 60)
+mqttclient = mqtt.Client(client_id=client_id)
+mqttclient.username_pw_set(username="epaper", password="epaper")
+mqttclient.on_connect = on_connect
+mqttclient.on_message = on_message
+mqttclient.connect(mqtthost, port, keepalive)
 
 # Blocking call that processes network traffic, dispatches callbacks
 # and handles reconnecting
 # Other loop*() fucntions are available that give a threaded interface
 # and a manual interface
-
 try:
-    client.loop_forever()
+    mqttclient.loop_forever()
 
 # deal with ^C
 except KeyboardInterrupt:

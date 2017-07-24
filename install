@@ -2,7 +2,7 @@
 # install files in the home of user "Pi"
 cd /home/pi
 # install packages
-apt-get install git bc i2c-tools python python-imaging python-smbus -y
+apt-get install git bc i2c-tools python python-imaging python-smbus python-dateutil -y
 # install pip
 echo -e "Installing pip";
 curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | python2.7
@@ -21,3 +21,6 @@ cd PaPiRus
 python setup.py install
 # Install drivers and setup epaper
 papirus-setup
+# reboot
+whiptail --msgbox "The system will now reboot" 8 40
+reboot

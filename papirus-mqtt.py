@@ -53,6 +53,7 @@ client_id = "epaper"
 mqtthost = "10.0.2.0"
 port = 1883
 keepalive = 60
+debug = True
 
 screen = Papirus(rotation=180)
 
@@ -64,9 +65,21 @@ screen.clear()
 Subscribing in on_connect: If we lose connection and reconnect then subscriptions will be renewed
 """
 def on_connect(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
+    if(debug):
+        print("Connected to mqtt host "+mqtthost+" with result code "+str(rc))
     mqttclient.subscribe([("epaper/power", 2), ("epaper/cons_d", 2), ("epaper/temp_indoor", 2), ("epaper/humi_indoor", 2), ("epaper/temp_outdoor", 2), ("epaper/humi_outdoor", 2), ("epaper/download", 2), ("epaper/upload", 2)])
+    image = Image.new('1', screen.size, WHITE)
+    draw = ImageDraw.Draw(image)
 
+    font_path = "/usr/share/fonts/truetype/freefont/FreeSansBold.ttf"
+    font_title = ImageFont.truetype(font_path, 17)
+    font_values = ImageFont.truetype(font_path, 15)
+
+    draw.text((0, 0), "Smarthome ", font=font_title, fill=0)
+    draw.text((125, 0), (datetime.now().strftime("%H:%M")) + " Uhr", font=font_title, fill=0)
+    draw.text((0, 20), "Connected to "+mqtthost+":"+str(port), font=font_values, fill=0)
+    screen.display(image)
+    update_screen()
 
 """
 Store values from the mqtt topics in the variables
@@ -120,7 +133,7 @@ def on_message(mqtt, obj, msg):
 Display data on the screen
 """
 def display_data():
-    global power, consumption, temperature, humidity, temperature2, humidity2, download, upload, last_refresh
+    global power, consumption, temperature, humidity, temperature2, humidity2, download, upload
     image = Image.new('1', screen.size, WHITE)
     draw = ImageDraw.Draw(image)
 
@@ -143,15 +156,23 @@ def display_data():
     draw.text((65, 80), download + " DL", font=font_values, fill=0)
     draw.text((125, 80), upload + " UL", font=font_values, fill=0)
     screen.display(image)
+    update_screen()
+	
+	
+	
+def update_screen():
+    global last_refresh
     now = datetime.now()
     delta = timedelta(minutes=3)
     elapsed = now - last_refresh
     if elapsed >= delta:
-        print ("Slept for 3 minutes")
+        if(debug):
+		    print ("full update")
         screen.update()
         last_refresh = datetime.now()
     else:
-        print ("update")
+        if(debug):
+            print ("partial update")
         screen.partial_update()
 
 mqttclient = mqtt.Client(client_id=client_id)

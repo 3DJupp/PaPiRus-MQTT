@@ -139,7 +139,14 @@ Display data on the screen
 
 
 def display_data():
-    global power, consumption, temperature, humidity, temperature2, humidity2, download, upload
+    global power
+    global consumption
+    global temperature
+    global humidity
+    global temperature2
+    global humidity2
+    global download
+    global upload
     image = Image.new('1', screen.size, WHITE)
     draw = ImageDraw.Draw(image)
 

@@ -64,6 +64,8 @@ screen.clear()
 """
 Subscribing in on_connect: If we lose connection and reconnect then subscriptions will be renewed
 """
+
+
 def on_connect(client, userdata, flags, rc):
     if(debug):
         print("Connected to mqtt host "+mqtthost+" with result code "+str(rc))
@@ -84,6 +86,8 @@ def on_connect(client, userdata, flags, rc):
 """
 Store values from the mqtt topics in the variables
 """
+
+
 def on_message(mqtt, obj, msg):
     global power, consumption, temperature, humidity, temperature2, humidity2, download, upload, power_prev, consumption_prev, temperature_prev, humidity_prev, temperature2_prev, humidity2_prev, download_prev, upload_prev
 
@@ -132,6 +136,8 @@ def on_message(mqtt, obj, msg):
 """
 Display data on the screen
 """
+
+
 def display_data():
     global power, consumption, temperature, humidity, temperature2, humidity2, download, upload
     image = Image.new('1', screen.size, WHITE)
@@ -157,9 +163,8 @@ def display_data():
     draw.text((125, 80), upload + " UL", font=font_values, fill=0)
     screen.display(image)
     update_screen()
-	
-	
-	
+
+
 def update_screen():
     global last_refresh
     now = datetime.now()
@@ -167,7 +172,7 @@ def update_screen():
     elapsed = now - last_refresh
     if elapsed >= delta:
         if(debug):
-		    print ("full update")
+            print ("full update")
         screen.update()
         last_refresh = datetime.now()
     else:

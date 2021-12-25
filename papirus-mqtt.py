@@ -11,13 +11,14 @@ from papirus import Papirus
 import os
 import sys
 import paho.mqtt.client as mqtt
-__version__ = '0.1'
+__version__ = '0.2'
 __author__ = 'Dominic Spatz'
 
 # Check EPD_SIZE is defined
 EPD_SIZE = 0.0
 if os.path.exists('/etc/default/epd-fuse'):
-    execfile('/etc/default/epd-fuse')
+    with open('/etc/default/epd-fuse') as infile:
+        exec(infile.read())
 if EPD_SIZE == 0.0:
     print("Please select your screen size by running 'papirus-config'.")
     sys.exit()

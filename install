@@ -13,7 +13,7 @@ pip install paho-mqtt
 raspi-config nonint do_spi 0
 raspi-config nonint do_i2c 0
 # install papirus-mqtt
-wget -q https://goo.gl/dr5I7u -O /home/pi/papirus-mqtt.py && chmod +x /home/pi/papirus-mqtt.py
+wget -q https://raw.githubusercontent.com/Dom1n1c/PaPiRus-MQTT/master/papirus-mqtt.py -O /home/pi/papirus-mqtt.py && chmod +x /home/pi/papirus-mqtt.py
 # install papirus/gratis
 git clone https://github.com/PiSupply/PaPiRus.git
 cd PaPiRus
